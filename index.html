@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Archerfish Holdings</title>
+<meta name="description" content="Archerfish Holdings LLC — an independent software studio building AI systems that do real work.">
+<meta property="og:title" content="Archerfish Holdings">
+<meta property="og:description" content="An independent software studio building AI systems that do real work.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<!--
+  SETUP: the contact form posts to Formspree. Create a free form at formspree.io,
+  then replace FORM_ID below with the id from your endpoint (https://formspree.io/f/FORM_ID).
+  Until then the form shows an error on submit.
+-->
+<style>
+:root{
+  color-scheme:dark;
+  --ground:#08090A; --surface:#101113; --raised:#16181B;
+  --ink:#E4E6EA; --muted:#8A8F98; --line:#26282D;
+  --accent:#5EA2FF; --accent-ink:#08090A;
+  --sans:"Geist",system-ui,-apple-system,"Segoe UI",Helvetica,sans-serif;
+  --mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --gutter:24px; --maxw:1120px;
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    color-scheme:light;
+    --ground:#FCFCFD; --surface:#F3F4F6; --raised:#FFFFFF;
+    --ink:#0C0D0F; --muted:#6B7078; --line:#E3E5E9;
+    --accent:#1B5FD9; --accent-ink:#FFFFFF;
+  }
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --ground:#FCFCFD; --surface:#F3F4F6; --raised:#FFFFFF;
+  --ink:#0C0D0F; --muted:#6B7078; --line:#E3E5E9;
+  --accent:#1B5FD9; --accent-ink:#FFFFFF;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:var(--sans); font-size:17px; line-height:1.6;
+  -webkit-font-smoothing:antialiased; font-synthesis-weight:none;
+}
+.rule{border-top:1px solid var(--line)}
+.bleed{width:100%}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+
+/* ---- chrome ---- */
+.topbar{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:20;
+  background:color-mix(in srgb, var(--ground) 88%, transparent);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px}
+.wordmark{display:flex;align-items:center;gap:9px;font:600 14px/1 var(--sans);letter-spacing:-.01em;text-decoration:none}
+.wordmark svg{display:block;flex:none}
+.status{display:flex;align-items:center;gap:8px;font:500 11px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none}
+
+/* ---- hero ---- */
+.hero{padding-block:clamp(72px,14vw,132px) clamp(48px,8vw,76px)}
+.eyebrow{font:500 11px/1.4 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0 0 28px}
+h1{
+  font-weight:600; font-size:clamp(2.75rem,7.2vw,5.25rem); line-height:.98;
+  letter-spacing:-.035em; margin:0; max-width:17ch; text-wrap:balance;
+}
+h1 em{font-style:normal;color:var(--muted)}
+.hero p{margin:28px 0 0;max-width:52ch;font-size:clamp(1.0625rem,2.1vw,1.1875rem);color:var(--muted);line-height:1.55}
+
+/* ---- sections ---- */
+section{padding-block:clamp(48px,7vw,80px)}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin:0 0 32px}
+.idx{font:500 11px/1 var(--mono);letter-spacing:.11em;color:var(--accent)}
+h2{font:500 11px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0}
+.prose{max-width:62ch;display:flex;flex-direction:column;gap:18px}
+.prose p{margin:0;font-size:1.0625rem}
+.prose strong{font-weight:600}
+
+/* ---- work rows ---- */
+.rows{border-top:1px solid var(--line)}
+.row{
+  display:grid; grid-template-columns:auto; gap:6px;
+  padding:22px 12px; margin-inline:-12px;
+  border-bottom:1px solid var(--line);
+  transition:background 140ms ease-out;
+}
+@media (min-width:720px){
+  .row{grid-template-columns:36px 250px 1fr;gap:24px;align-items:baseline}
+}
+.row:hover{background:var(--surface)}
+.row .n{font:500 11px/1.9 var(--mono);color:var(--muted)}
+.row h3{margin:0;font:600 1.0625rem/1.35 var(--sans);letter-spacing:-.01em}
+.row p{margin:0;color:var(--muted);font-size:.9875rem;line-height:1.5;max-width:54ch}
+
+/* ---- capability strip ---- */
+.specs{display:grid;gap:0;border-top:1px solid var(--line)}
+@media (min-width:720px){.specs{grid-template-columns:1fr 1fr}}
+.spec{display:flex;justify-content:space-between;gap:20px;padding:14px 0;border-bottom:1px solid var(--line)}
+@media (min-width:720px){.spec:nth-child(odd){padding-right:32px}.spec:nth-child(even){padding-left:32px;border-left:1px solid var(--line)}}
+.spec dt{font:500 11px/1.8 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0}
+.spec dd{margin:0;font-size:.9875rem;font-weight:500;text-align:right}
+
+/* ---- form ---- */
+.contact-grid{display:grid;gap:36px}
+@media (min-width:860px){.contact-grid{grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:56px}}
+.contact-copy p{margin:0 0 14px;color:var(--muted);max-width:40ch}
+form{display:grid;gap:16px}
+.field{display:grid;gap:7px}
+label{font:500 11px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+input,textarea{
+  font:400 1rem/1.5 var(--sans); color:var(--ink);
+  background:var(--raised); border:1px solid var(--line); border-radius:6px;
+  padding:12px 14px; width:100%; transition:border-color 120ms ease-out;
+}
+input:hover,textarea:hover{border-color:var(--muted)}
+textarea{resize:vertical;min-height:132px}
+.row2{display:grid;gap:16px}
+@media (min-width:560px){.row2{grid-template-columns:1fr 1fr}}
+button[type=submit]{
+  justify-self:start; font:600 .9375rem/1 var(--sans); letter-spacing:-.01em;
+  background:var(--accent); color:var(--accent-ink); border:0; border-radius:6px;
+  padding:14px 26px; cursor:pointer; min-height:46px;
+  transition:filter 120ms ease-out;
+}
+button[type=submit]:hover{filter:brightness(1.08)}
+button[type=submit][disabled]{opacity:.55;cursor:default}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.formnote{font:400 .875rem/1.5 var(--sans);color:var(--muted);margin:0}
+.formnote[data-state="error"]{color:var(--ink)}
+.sent{
+  border:1px solid var(--line); border-left:2px solid var(--accent);
+  background:var(--surface); border-radius:6px; padding:20px 22px;
+}
+.sent h3{margin:0 0 6px;font:600 1rem/1.4 var(--sans)}
+.sent p{margin:0;color:var(--muted);font-size:.9375rem}
+
+/* ---- footer ---- */
+footer{padding-block:28px 40px;color:var(--muted);font-size:.8125rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center}
+.legal{font-family:var(--mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase}
+.themebtn{
+  margin-left:auto; font:500 11px/1 var(--mono); letter-spacing:.09em; text-transform:uppercase;
+  background:transparent; color:var(--muted); border:1px solid var(--line);
+  border-radius:5px; padding:8px 11px; cursor:pointer; min-height:32px;
+}
+.themebtn:hover{color:var(--ink);border-color:var(--muted)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="wordmark" href="#top">
+      <svg width="26" height="17" viewBox="0 0 34 22" fill="none" aria-hidden="true">
+        <path d="M2 11c4.5-5.5 9.5-8 15-8 4.5 0 8 1.8 10.5 4.2L33 4l-2.4 7L33 18l-5.5-3.2C25 17.2 21.5 19 17 19c-5.5 0-10.5-2.5-15-8z" fill="currentColor"/>
+        <circle cx="10.5" cy="9.6" r="1.5" fill="var(--ground)"/>
+      </svg>
+      Archerfish
+    </a>
+    <span class="status"><span class="dot" aria-hidden="true"></span>Taking projects for 2027</span>
+  </div>
+</div>
+
+<main id="top">
+
+  <div class="wrap hero">
+    <p class="eyebrow"><span style="white-space:nowrap">Archerfish Holdings LLC</span> &nbsp;·&nbsp; <span style="white-space:nowrap">Independent software studio</span></p>
+    <h1>We build AI systems that <em>do the work</em>, not demos of it.</h1>
+    <p>A studio in the Bay Area. We design and ship applied AI software end to end — from the first sketch to the system running in production.</p>
+  </div>
+
+  <div class="rule"></div>
+
+  <section class="wrap" id="studio">
+    <div class="sec-head"><span class="idx">01</span><h2>Studio</h2></div>
+    <div class="prose">
+      <p>Archerfish Holdings builds applied AI software, drawing on a decade of work on AI products and the tooling designers and engineers use to shape them.</p>
+      <p>Most AI work stops at the demo. The interesting part starts after it: the retries, the edge cases, the moment a model has to act on someone's behalf and be trusted with the result. That is the work the studio takes on.</p>
+      <p>A small number of engagements a year, shipped end to end.</p>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <section class="wrap" id="work">
+    <div class="sec-head"><span class="idx">02</span><h2>What we build</h2></div>
+    <div class="rows">
+      <article class="row">
+        <span class="n">01</span>
+        <h3>Agent systems</h3>
+        <p>Assistants that carry out real errands end to end — placing calls, handling correspondence, running scheduled work — with the guardrails and hand-back paths that make them safe to leave running.</p>
+      </article>
+      <article class="row">
+        <span class="n">02</span>
+        <h3>Interfaces for models</h3>
+        <p>Tooling that gives designers and operators direct, legible control over model behaviour, instead of a prompt box and a shrug.</p>
+      </article>
+      <article class="row">
+        <span class="n">03</span>
+        <h3>Evaluation and prototypes</h3>
+        <p>Short builds that answer one question about a product idea, with the measurement in place to tell whether the answer held.</p>
+      </article>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <section class="wrap" id="practice">
+    <div class="sec-head"><span class="idx">03</span><h2>Practice</h2></div>
+    <dl class="specs">
+      <div class="spec"><dt>Entity</dt><dd>Archerfish Holdings LLC</dd></div>
+      <div class="spec"><dt>Based</dt><dd>Bay Area, California</dd></div>
+      <div class="spec"><dt>Engagements</dt><dd>Selective, by enquiry</dd></div>
+      <div class="spec"><dt>Typical length</dt><dd>4–12 weeks</dd></div>
+      <div class="spec"><dt>Stack</dt><dd>Python · TypeScript · LLM APIs</dd></div>
+      <div class="spec"><dt>Availability</dt><dd>2027 onward</dd></div>
+    </dl>
+  </section>
+
+  <div class="rule"></div>
+
+  <section class="wrap" id="contact">
+    <div class="sec-head"><span class="idx">04</span><h2>Enquiries</h2></div>
+    <div class="contact-grid">
+      <div class="contact-copy">
+        <p>Tell us what you're building and what's in the way. Every message is read, and we reply within two business days.</p>
+        <p>Existing clients: use the address on your statement of work.</p>
+      </div>
+      <div id="formwrap">
+        <form id="contact-form" action="https://formspree.io/f/FORM_ID" method="POST" novalidate>
+          <div class="row2">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="message">Project</label>
+            <textarea id="message" name="message" required placeholder="What you're building, the timeline, and what you need help with."></textarea>
+          </div>
+          <div class="hp" aria-hidden="true">
+            <label for="company">Company</label>
+            <input id="company" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <button type="submit" id="submit">Send enquiry</button>
+          <p class="formnote" id="formnote" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="rule"></div>
+<footer>
+  <div class="wrap">
+    <span class="legal">© <span id="yr">2026</span> Archerfish Holdings LLC</span>
+    <span>Mountain View, California</span>
+    <button class="themebtn" type="button" id="theme" aria-label="Switch colour theme">Theme</button>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // theme toggle: system -> opposite of what's showing, remembered per browser
+  var root = document.documentElement;
+  try{ var saved = localStorage.getItem('af-theme'); if(saved){ root.setAttribute('data-theme', saved); } }catch(e){}
+  document.getElementById('theme').addEventListener('click', function(){
+    var dark = root.getAttribute('data-theme')
+      ? root.getAttribute('data-theme') === 'dark'
+      : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var next = dark ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try{ localStorage.setItem('af-theme', next); }catch(e){}
+  });
+
+  // contact form
+  var form = document.getElementById('contact-form');
+  var note = document.getElementById('formnote');
+  var btn  = document.getElementById('submit');
+
+  function fail(msg){
+    note.textContent = msg;
+    note.setAttribute('data-state','error');
+    btn.disabled = false;
+    btn.textContent = 'Send enquiry';
+  }
+
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    note.removeAttribute('data-state');
+    note.textContent = '';
+
+    if(!form.name.value.trim() || !form.message.value.trim()){
+      return fail('Please add your name and a short note.');
+    }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.value.trim())){
+      return fail('That email address looks incomplete.');
+    }
+    if(form.action.indexOf('FORM_ID') !== -1){
+      return fail('The form endpoint is not set up yet.');
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function(res){
+      if(!res.ok) throw new Error('bad status');
+      document.getElementById('formwrap').innerHTML =
+        '<div class="sent"><h3>Message sent</h3><p>Thanks — we\'ll reply within two business days.</p></div>';
+    }).catch(function(){
+      fail('That didn\'t send. Please try again in a moment.');
+    });
+  });
+})();
+</script>
+</body>
+</html>
