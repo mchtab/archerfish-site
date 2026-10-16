@@ -4,289 +4,636 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Archerfish Holdings</title>
-<meta name="description" content="Archerfish Holdings LLC — an independent software studio building AI systems that do real work.">
+<meta name="description" content="Archerfish Holdings LLC, an independent software studio building AI systems that do real work.">
 <meta property="og:title" content="Archerfish Holdings">
 <meta property="og:description" content="An independent software studio building AI systems that do real work.">
 <meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:wght@400;500;600&family=Martian+Mono:wdth,wght@75..112.5,300..500&display=swap">
 <!--
   SETUP: the contact form posts to Formspree. Create a free form at formspree.io,
   then replace FORM_ID below with the id from your endpoint (https://formspree.io/f/FORM_ID).
-  Until then the form shows an error on submit.
 -->
 <style>
 :root{
-  color-scheme:dark;
-  --ground:#08090A; --surface:#101113; --raised:#16181B;
-  --ink:#E4E6EA; --muted:#8A8F98; --line:#26282D;
-  --accent:#5EA2FF; --accent-ink:#08090A;
-  --sans:"Geist",system-ui,-apple-system,"Segoe UI",Helvetica,sans-serif;
-  --mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;
-  --gutter:24px; --maxw:1120px;
+  color-scheme:light;
+  /* drafting vellum */
+  --desk:#D2DAE1;
+  --paper:#E4EAEF;
+  --paper-2:#EDF1F4;
+  --grid:rgba(38,72,104,.075);
+  --ink:#18212A;
+  --graphite:#4E5A65;
+  --rule:#8B99A6;
+  --rule-soft:#B7C3CD;
+  --accent:#0F64A6;
+  --accent-ink:#FFFFFF;
+  --display:"Barlow Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --sans:"Barlow","Helvetica Neue",Arial,sans-serif;
+  --mono:"Martian Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --gutter:16px;
 }
-@media (prefers-color-scheme:light){
-  :root:not([data-theme="dark"]){
-    color-scheme:light;
-    --ground:#FCFCFD; --surface:#F3F4F6; --raised:#FFFFFF;
-    --ink:#0C0D0F; --muted:#6B7078; --line:#E3E5E9;
-    --accent:#1B5FD9; --accent-ink:#FFFFFF;
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    /* blueprint */
+    --desk:#061B33;
+    --paper:#0B2B4F;
+    --paper-2:#0E3259;
+    --grid:rgba(168,214,255,.075);
+    --ink:#E3F2FB;
+    --graphite:#9FBBD1;
+    --rule:#5E87AC;
+    --rule-soft:#2B5378;
+    --accent:#8BE3FF;
+    --accent-ink:#082544;
   }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --desk:#061B33;
+  --paper:#0B2B4F;
+  --paper-2:#0E3259;
+  --grid:rgba(168,214,255,.075);
+  --ink:#E3F2FB;
+  --graphite:#9FBBD1;
+  --rule:#5E87AC;
+  --rule-soft:#2B5378;
+  --accent:#8BE3FF;
+  --accent-ink:#082544;
 }
 :root[data-theme="light"]{
   color-scheme:light;
-  --ground:#FCFCFD; --surface:#F3F4F6; --raised:#FFFFFF;
-  --ink:#0C0D0F; --muted:#6B7078; --line:#E3E5E9;
-  --accent:#1B5FD9; --accent-ink:#FFFFFF;
+  --desk:#D2DAE1;
+  --paper:#E4EAEF;
+  --paper-2:#EDF1F4;
+  --grid:rgba(38,72,104,.075);
+  --ink:#18212A;
+  --graphite:#4E5A65;
+  --rule:#8B99A6;
+  --rule-soft:#B7C3CD;
+  --accent:#0F64A6;
+  --accent-ink:#FFFFFF;
 }
+@media (min-width:760px){:root{--gutter:36px}}
+
 *{box-sizing:border-box}
 html,body{margin:0}
 body{
-  background:var(--ground); color:var(--ink);
+  background:var(--desk); color:var(--ink);
   font-family:var(--sans); font-size:17px; line-height:1.6;
-  -webkit-font-smoothing:antialiased; font-synthesis-weight:none;
+  -webkit-font-smoothing:antialiased;
 }
-.rule{border-top:1px solid var(--line)}
-.bleed{width:100%}
-.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+:focus-visible{outline:2px dashed var(--accent);outline-offset:3px}
+.mono{font-family:var(--mono);font-stretch:87.5%}
 
-/* ---- chrome ---- */
-.topbar{
-  position:sticky; top:env(safe-area-inset-top,0px); z-index:20;
-  background:color-mix(in srgb, var(--ground) 88%, transparent);
-  backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+/* ---------- sheet ---------- */
+.sheet{
+  position:relative; max-width:1320px; margin:0 auto;
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:24px 24px;
+  border-inline:1px solid var(--rule);
 }
-.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px}
-.wordmark{display:flex;align-items:center;gap:9px;font:600 14px/1 var(--sans);letter-spacing:-.01em;text-decoration:none}
-.wordmark svg{display:block;flex:none}
-.status{display:flex;align-items:center;gap:8px;font:500 11px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none}
+@media (min-width:1360px){
+  .sheet{margin:24px auto;border:1px solid var(--rule)}
+}
+.zones{
+  display:grid; grid-template-columns:repeat(4,1fr);
+  height:22px; font:400 9.5px/22px var(--mono); font-stretch:87.5%;
+  color:var(--graphite); text-align:center;
+}
+.zones span{border-left:1px solid var(--rule-soft)}
+.zones span:first-child{border-left:0}
+.zones span:nth-child(n+5){display:none}
+@media (min-width:760px){
+  .zones{grid-template-columns:repeat(8,1fr)}
+  .zones span:nth-child(n+5){display:block}
+}
+.side{display:none}
+@media (min-width:760px){
+  .sheet{padding-inline:22px}
+  .side{
+    position:absolute; top:22px; bottom:22px; width:22px;
+    display:flex; flex-direction:column;
+    font:400 9.5px/1 var(--mono); color:var(--graphite);
+  }
+  .side.l{left:0} .side.r{right:0}
+  .side span{flex:1;display:flex;align-items:center;justify-content:center;border-top:1px solid var(--rule-soft)}
+  .side span:first-child{border-top:0}
+}
+.frame{border:1.5px solid var(--ink)}
+.wrap{
+  padding-left:max(var(--gutter), env(safe-area-inset-left,0px));
+  padding-right:max(var(--gutter), env(safe-area-inset-right,0px));
+}
 
-/* ---- hero ---- */
-.hero{padding-block:clamp(72px,14vw,132px) clamp(48px,8vw,76px)}
-.eyebrow{font:500 11px/1.4 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0 0 28px}
+/* ---------- top strip ---------- */
+.strip{
+  display:flex; align-items:stretch; justify-content:space-between;
+  border-bottom:1px solid var(--ink); min-height:52px;
+}
+.wordmark{
+  display:flex; align-items:center; gap:10px; text-decoration:none;
+  font:600 19px/1 var(--display); letter-spacing:.06em; text-transform:uppercase;
+}
+.wordmark svg{flex:none;display:block}
+.strip-r{display:flex;align-items:stretch}
+.status{
+  display:none; align-items:center; gap:9px; padding:0 18px;
+  border-left:1px solid var(--rule);
+  font:400 10.5px/1 var(--mono); font-stretch:87.5%; letter-spacing:.06em; text-transform:uppercase; color:var(--graphite);
+}
+@media (min-width:640px){.status{display:flex}}
+.tick{width:9px;height:9px;border:1.5px solid var(--accent);position:relative;flex:none}
+.tick::after{content:"";position:absolute;inset:2px;background:var(--accent)}
+.themebtn{
+  display:flex; align-items:center; gap:8px; min-height:44px; padding:0 0 0 18px;
+  background:transparent; color:var(--ink); border:0; border-left:1px solid var(--rule);
+  font:400 10.5px/1 var(--mono); font-stretch:87.5%; letter-spacing:.06em; text-transform:uppercase; cursor:pointer;
+}
+.themebtn .sw{width:14px;height:14px;border:1.5px solid currentColor;background:linear-gradient(135deg,var(--paper) 50%,var(--ink) 50%)}
+.themebtn:hover{color:var(--accent)}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;padding-block:36px 0}
+@media (min-width:1000px){
+  .hero{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:0;padding-block:0}
+  .hero-copy{padding:48px 40px 40px 0;border-right:1px solid var(--rule);display:flex;flex-direction:column}
+  .hero-fig{padding:28px 0 0 32px;display:flex;flex-direction:column}
+}
+.eyebrow{
+  margin:0 0 22px; font:400 10.5px/1.6 var(--mono); font-stretch:87.5%; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--graphite);
+}
+.eyebrow b{font-weight:500;color:var(--ink)}
 h1{
-  font-weight:600; font-size:clamp(2.75rem,7.2vw,5.25rem); line-height:.98;
-  letter-spacing:-.035em; margin:0; max-width:17ch; text-wrap:balance;
+  margin:0; font-family:var(--display); font-weight:600; text-transform:uppercase;
+  font-size:clamp(2.7rem,5.6vw,4.85rem); line-height:.94; letter-spacing:.004em;
+  text-wrap:balance; max-width:13ch;
 }
-h1 em{font-style:normal;color:var(--muted)}
-.hero p{margin:28px 0 0;max-width:52ch;font-size:clamp(1.0625rem,2.1vw,1.1875rem);color:var(--muted);line-height:1.55}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{margin:24px 0 0;max-width:42ch;font-size:1.0625rem;color:var(--graphite);line-height:1.55}
+.callout{
+  margin-top:auto; padding-top:32px;
+  font:400 10.5px/1.7 var(--mono); font-stretch:87.5%; letter-spacing:.04em; color:var(--graphite);
+  text-transform:uppercase;
+}
+.callout span{display:block;border-top:1px solid var(--rule-soft);padding:7px 0}
+.callout span:last-child{border-bottom:1px solid var(--rule-soft)}
+.callout i{font-style:normal;color:var(--ink);display:inline-block;min-width:13.5ch}
 
-/* ---- sections ---- */
-section{padding-block:clamp(48px,7vw,80px)}
-.sec-head{display:flex;align-items:baseline;gap:14px;margin:0 0 32px}
-.idx{font:500 11px/1 var(--mono);letter-spacing:.11em;color:var(--accent)}
-h2{font:500 11px/1 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0}
-.prose{max-width:62ch;display:flex;flex-direction:column;gap:18px}
+/* figure */
+.fig{margin:0 0 24px}
+.hero-fig{display:flex;flex-direction:column;min-width:0}
+.fig svg{display:block;width:100%;height:auto;max-height:470px;color:var(--ink);overflow:visible}
+.fig .obj{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+.fig .objf{fill:var(--paper);stroke:var(--ink);stroke-width:1.6;stroke-linejoin:round}
+.fig .thin{fill:none;stroke:var(--ink);stroke-width:.8}
+.fig .hid{fill:var(--paper);stroke:var(--graphite);stroke-width:1.1;stroke-dasharray:4 3}
+.fig .ctr{fill:none;stroke:var(--graphite);stroke-width:.8;stroke-dasharray:14 3 2 3}
+.fig .ray{fill:none;stroke:var(--ink);stroke-width:1}
+.fig .ext{fill:none;stroke:var(--graphite);stroke-width:1;stroke-dasharray:5 4}
+.fig .dim{fill:none;stroke:var(--graphite);stroke-width:.75}
+.fig .lead{fill:none;stroke:var(--graphite);stroke-width:.75}
+.fig .jet{fill:none;stroke:var(--accent);stroke-width:2.2;stroke-linecap:round}
+.fig .acc{fill:none;stroke:var(--accent);stroke-width:1.2}
+.fig .accf{fill:var(--accent)}
+.fig .inkf{fill:var(--ink)}
+.fig .hatch{stroke:var(--rule-soft);stroke-width:1}
+.fig .t{font-family:var(--mono);font-stretch:87.5%;font-size:9.5px;letter-spacing:.05em;fill:var(--graphite)}
+.fig .t.k{fill:var(--ink)}
+.fig .v{font-family:var(--display);font-style:italic;font-weight:500;font-size:16px;fill:var(--ink)}
+.fig .eq{font-family:var(--display);font-style:italic;font-weight:500;font-size:19px;fill:var(--ink)}
+.fig .bg{fill:var(--paper)}
+@media (max-width:640px){
+  .fig .t{font-size:19px}
+  .fig .v{font-size:25px}
+  .fig .wide,.fig .sub{display:none}
+}
+.figcap{
+  display:flex; gap:14px; align-items:baseline; margin:14px 0 0;
+  font-size:.9375rem; color:var(--graphite); line-height:1.5; max-width:62ch;
+}
+.figcap b{font:600 15px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
+
+/* title block */
+.tblock{
+  display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+  margin:auto calc(-1 * max(var(--gutter), env(safe-area-inset-right,0px))) 0 0;
+  border-top:1.5px solid var(--ink); border-left:1.5px solid var(--ink);
+}
+@media (max-width:999px){
+  .tblock{margin-left:calc(-1 * max(var(--gutter), env(safe-area-inset-left,0px)));border-left:0}
+}
+.tblock div{padding:7px 10px 8px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);min-width:0}
+.tblock div:nth-child(4n){border-right:0}
+.tblock .ttl{grid-column:span 3}
+.tblock div:nth-last-child(-n+4){border-bottom:0}
+.tblock small{display:block;font:400 8.5px/1.4 var(--mono);font-stretch:87.5%;letter-spacing:.08em;text-transform:uppercase;color:var(--graphite)}
+.tblock strong{display:block;font:600 15px/1.25 var(--display);letter-spacing:.05em;text-transform:uppercase;overflow-wrap:anywhere}
+.tblock .ttl strong{font-size:19px}
+@media (max-width:480px){
+  .tblock{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tblock .ttl{grid-column:span 2}
+  .tblock div,.tblock div:nth-child(4n),.tblock div:nth-last-child(-n+4){border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+  .tblock div:nth-child(odd){border-right:0}
+  .tblock div:last-child{grid-column:span 2;border-right:0;border-bottom:0}
+}
+
+/* ---------- notes ---------- */
+.note{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;padding-block:44px;border-top:1.5px solid var(--ink)}
+@media (min-width:900px){.note{grid-template-columns:240px minmax(0,1fr);gap:40px;padding-block:56px}}
+.note-head{display:flex;flex-direction:column;gap:10px}
+.note-head .kicker{font:400 10px/1 var(--mono);font-stretch:87.5%;letter-spacing:.1em;text-transform:uppercase;color:var(--graphite);display:flex;align-items:center;gap:10px}
+.note-head .kicker::after{content:"";flex:1;max-width:120px;border-top:1px solid var(--rule)}
+h2{margin:0;font:600 clamp(1.9rem,3.4vw,2.5rem)/1 var(--display);text-transform:uppercase;letter-spacing:.02em}
+.prose{max-width:62ch;display:flex;flex-direction:column;gap:16px}
 .prose p{margin:0;font-size:1.0625rem}
-.prose strong{font-weight:600}
+.prose p:first-child{font-size:1.1875rem;line-height:1.5}
 
-/* ---- work rows ---- */
-.rows{border-top:1px solid var(--line)}
-.row{
-  display:grid; grid-template-columns:auto; gap:6px;
-  padding:22px 12px; margin-inline:-12px;
-  border-bottom:1px solid var(--line);
-  transition:background 140ms ease-out;
+/* details */
+.details{display:grid;gap:0;border:1px solid var(--ink)}
+@media (min-width:760px){.details{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.detail{position:relative;padding:20px 22px 24px;border-top:1px solid var(--rule)}
+.detail:first-child{border-top:0}
+@media (min-width:760px){
+  .detail{border-top:0;border-left:1px solid var(--rule)}
+  .detail:first-child{border-left:0}
 }
-@media (min-width:720px){
-  .row{grid-template-columns:36px 250px 1fr;gap:24px;align-items:baseline}
+.detail-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.bubble{width:40px;height:40px;flex:none}
+.bubble circle,.bubble line{fill:none;stroke:var(--ink);stroke-width:1.2}
+.bubble text{fill:var(--ink);font-family:var(--display);font-weight:600;text-anchor:middle}
+.glyph{width:76px;height:40px;flex:none;color:var(--graphite)}
+.glyph *{fill:none;stroke:currentColor;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.glyph .a{stroke:var(--accent)}
+.detail h3{margin:0 0 8px;font:600 1.375rem/1.15 var(--display);text-transform:uppercase;letter-spacing:.03em}
+.detail p{margin:0;color:var(--graphite);font-size:.98rem;line-height:1.55}
+
+/* spec table */
+.spec-wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:start}
+@media (min-width:1080px){.spec-wrap{grid-template-columns:minmax(0,1fr) 260px;gap:36px}}
+table{width:100%;border-collapse:collapse;border:1px solid var(--ink)}
+caption{text-align:left;caption-side:top;padding:0 0 8px;font:400 10px/1 var(--mono);font-stretch:87.5%;letter-spacing:.1em;text-transform:uppercase;color:var(--graphite)}
+th,td{padding:11px 14px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:baseline}
+thead th{font:400 9.5px/1.2 var(--mono);font-stretch:87.5%;letter-spacing:.1em;text-transform:uppercase;color:var(--graphite);border-bottom:1px solid var(--ink);background:color-mix(in srgb,var(--paper-2) 70%,transparent)}
+tbody th{width:38%;font:400 10.5px/1.6 var(--mono);font-stretch:87.5%;letter-spacing:.07em;text-transform:uppercase;color:var(--graphite);border-right:1px solid var(--rule)}
+tbody td{font-weight:500}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
+.stamp{
+  border:2px solid var(--accent); padding:4px;
 }
-.row:hover{background:var(--surface)}
-.row .n{font:500 11px/1.9 var(--mono);color:var(--muted)}
-.row h3{margin:0;font:600 1.0625rem/1.35 var(--sans);letter-spacing:-.01em}
-.row p{margin:0;color:var(--muted);font-size:.9875rem;line-height:1.5;max-width:54ch}
+.stamp div{border:1px solid var(--accent);padding:16px 16px 18px;color:var(--accent)}
+.stamp small{display:block;font:400 9.5px/1.4 var(--mono);font-stretch:87.5%;letter-spacing:.12em;text-transform:uppercase}
+.stamp strong{display:block;margin:8px 0 6px;font:700 2rem/1 var(--display);letter-spacing:.03em;text-transform:uppercase}
+.stamp p{margin:0;color:var(--graphite);font-size:.9rem;line-height:1.45}
 
-/* ---- capability strip ---- */
-.specs{display:grid;gap:0;border-top:1px solid var(--line)}
-@media (min-width:720px){.specs{grid-template-columns:1fr 1fr}}
-.spec{display:flex;justify-content:space-between;gap:20px;padding:14px 0;border-bottom:1px solid var(--line)}
-@media (min-width:720px){.spec:nth-child(odd){padding-right:32px}.spec:nth-child(even){padding-left:32px;border-left:1px solid var(--line)}}
-.spec dt{font:500 11px/1.8 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0}
-.spec dd{margin:0;font-size:.9875rem;font-weight:500;text-align:right}
-
-/* ---- form ---- */
-.contact-grid{display:grid;gap:36px}
-@media (min-width:860px){.contact-grid{grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:56px}}
-.contact-copy p{margin:0 0 14px;color:var(--muted);max-width:40ch}
-form{display:grid;gap:16px}
-.field{display:grid;gap:7px}
-label{font:500 11px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+/* form */
+.contact{display:grid;grid-template-columns:minmax(0,1fr);gap:28px}
+@media (min-width:1080px){.contact{grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:40px}}
+.contact-copy p{margin:0 0 14px;color:var(--graphite);max-width:40ch}
+.contact-copy p:first-child{color:var(--ink)}
+form{display:grid;gap:0}
+.cells{display:grid;border:1px solid var(--ink);background:var(--paper-2)}
+.cells .r2{display:grid}
+@media (min-width:560px){.cells .r2{grid-template-columns:1fr 1fr}.cells .r2 .field+.field{border-left:1px solid var(--rule)}}
+.field{display:grid;border-bottom:1px solid var(--rule);position:relative}
+.cells>.field:last-of-type{border-bottom:0}
+.r2 .field{border-bottom:1px solid var(--rule)}
+@media (max-width:559px){.r2 .field+.field{border-top:0}}
+label{
+  display:block; padding:9px 12px 0;
+  font:400 9.5px/1.2 var(--mono); font-stretch:87.5%; letter-spacing:.1em; text-transform:uppercase; color:var(--graphite);
+}
 input,textarea{
-  font:400 1rem/1.5 var(--sans); color:var(--ink);
-  background:var(--raised); border:1px solid var(--line); border-radius:6px;
-  padding:12px 14px; width:100%; transition:border-color 120ms ease-out;
+  font:400 1rem/1.5 var(--sans); color:var(--ink); background:transparent;
+  border:0; border-radius:0; padding:6px 12px 11px; width:100%;
 }
-input:hover,textarea:hover{border-color:var(--muted)}
-textarea{resize:vertical;min-height:132px}
-.row2{display:grid;gap:16px}
-@media (min-width:560px){.row2{grid-template-columns:1fr 1fr}}
+input:focus-visible,textarea:focus-visible{outline:none}
+.field:focus-within{box-shadow:inset 0 0 0 2px var(--accent)}
+.field:focus-within label{color:var(--accent)}
+textarea{resize:vertical;min-height:140px}
+textarea::placeholder{color:var(--graphite);opacity:.75}
+.form-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:16px}
 button[type=submit]{
-  justify-self:start; font:600 .9375rem/1 var(--sans); letter-spacing:-.01em;
-  background:var(--accent); color:var(--accent-ink); border:0; border-radius:6px;
-  padding:14px 26px; cursor:pointer; min-height:46px;
-  transition:filter 120ms ease-out;
+  font:600 1rem/1 var(--display); letter-spacing:.1em; text-transform:uppercase;
+  background:var(--accent); color:var(--accent-ink); border:1.5px solid var(--accent); border-radius:0;
+  padding:0 26px; min-height:48px; cursor:pointer; display:inline-flex; align-items:center; gap:12px;
+  transition:background 120ms ease-out,color 120ms ease-out;
 }
-button[type=submit]:hover{filter:brightness(1.08)}
+button[type=submit]::after{content:"";width:18px;height:1.5px;background:currentColor;box-shadow:0 0 0 0 currentColor;clip-path:none}
+button[type=submit]:hover{background:transparent;color:var(--accent)}
 button[type=submit][disabled]{opacity:.55;cursor:default}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.formnote{font:400 .875rem/1.5 var(--sans);color:var(--muted);margin:0}
+.formnote{font:400 .875rem/1.5 var(--sans);color:var(--graphite);margin:0}
 .formnote[data-state="error"]{color:var(--ink)}
-.sent{
-  border:1px solid var(--line); border-left:2px solid var(--accent);
-  background:var(--surface); border-radius:6px; padding:20px 22px;
-}
-.sent h3{margin:0 0 6px;font:600 1rem/1.4 var(--sans)}
-.sent p{margin:0;color:var(--muted);font-size:.9375rem}
+.formnote[data-state="error"]::before{content:"\25B3  ";color:var(--accent)}
+.sent{border:1px solid var(--ink);background:var(--paper-2);padding:20px 22px;border-left:4px solid var(--accent)}
+.sent h3{margin:0 0 6px;font:600 1.25rem/1.2 var(--display);letter-spacing:.04em;text-transform:uppercase}
+.sent p{margin:0;color:var(--graphite);font-size:.9375rem}
 
-/* ---- footer ---- */
-footer{padding-block:28px 40px;color:var(--muted);font-size:.8125rem}
-footer .wrap{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center}
-.legal{font-family:var(--mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase}
-.themebtn{
-  margin-left:auto; font:500 11px/1 var(--mono); letter-spacing:.09em; text-transform:uppercase;
-  background:transparent; color:var(--muted); border:1px solid var(--line);
-  border-radius:5px; padding:8px 11px; cursor:pointer; min-height:32px;
-}
-.themebtn:hover{color:var(--ink);border-color:var(--muted)}
+/* footer */
+footer{border-top:1.5px solid var(--ink)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:6px 24px;align-items:center;min-height:56px;padding-block:12px}
+.legal{font:400 10px/1.5 var(--mono);font-stretch:87.5%;letter-spacing:.08em;text-transform:uppercase;color:var(--graphite)}
+.legal b{font-weight:500;color:var(--ink)}
+footer .end{margin-left:auto}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="wrap">
-    <a class="wordmark" href="#top">
-      <svg width="26" height="17" viewBox="0 0 34 22" fill="none" aria-hidden="true">
-        <path d="M2 11c4.5-5.5 9.5-8 15-8 4.5 0 8 1.8 10.5 4.2L33 4l-2.4 7L33 18l-5.5-3.2C25 17.2 21.5 19 17 19c-5.5 0-10.5-2.5-15-8z" fill="currentColor"/>
-        <circle cx="10.5" cy="9.6" r="1.5" fill="var(--ground)"/>
-      </svg>
-      Archerfish
-    </a>
-    <span class="status"><span class="dot" aria-hidden="true"></span>Taking projects for 2027</span>
+<div class="sheet">
+  <div class="zones" aria-hidden="true"><span>8</span><span>7</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span></div>
+  <div class="side l" aria-hidden="true"><span>F</span><span>E</span><span>D</span><span>C</span><span>B</span><span>A</span></div>
+  <div class="side r" aria-hidden="true"><span>F</span><span>E</span><span>D</span><span>C</span><span>B</span><span>A</span></div>
+
+  <div class="frame">
+
+    <header class="strip wrap">
+      <a class="wordmark" href="#top">
+        <svg width="34" height="34" viewBox="0 0 256 256" aria-hidden="true">
+          <mask id="logoInk"><image href="assets/logo-ink.png" width="256" height="256"/></mask>
+          <mask id="logoJet"><image href="assets/logo-jet.png" width="256" height="256"/></mask>
+          <rect width="256" height="256" fill="currentColor" mask="url(#logoInk)"/>
+          <rect width="256" height="256" fill="var(--accent)" mask="url(#logoJet)"/>
+        </svg>
+        Archerfish
+      </a>
+      <div class="strip-r">
+        <span class="status"><span class="tick" aria-hidden="true"></span>Taking projects for 2027</span>
+        <button class="themebtn" type="button" id="theme" aria-label="Switch colour theme"><span class="sw" aria-hidden="true"></span><span id="theme-label">Theme</span></button>
+      </div>
+    </header>
+
+    <main id="top">
+
+      <div class="hero wrap">
+        <div class="hero-copy">
+          <p class="eyebrow"><b>Archerfish Holdings LLC</b><br>Independent software studio · Bay Area</p>
+          <h1>We build AI systems that <em>do the work</em>, not demos of it.</h1>
+          <p class="lede">We design and ship applied AI software end to end, from the first sketch to the system running in production.</p>
+          <div class="callout" aria-label="Studio summary">
+            <span><i>Engagements</i> A few a year, by enquiry</span>
+            <span><i>Length</i> 4–12 weeks</span>
+            <span><i>Status</i> Taking projects for 2027</span>
+          </div>
+        </div>
+
+        <div class="hero-fig">
+          <figure class="fig">
+            <svg viewBox="0 0 720 470" role="img" aria-labelledby="fig-t fig-d">
+              <title id="fig-t">Figure 1: the real target</title>
+              <desc id="fig-d">Diagram in the style of an engineering drawing. A horizontal line marks the surface: the demo, the deck and the first brief sit above it. The studio, drawn as an archerfish, works below it. Seen through the surface, the target appears in one place: the apparent target, the ask as first stated. A straight aim at it builds exactly what was asked. The real target sits elsewhere: the errand done unattended and trusted with the result. The studio's shot is an arc aimed at the real target, offset from the straight aim by an angle labelled correction, meaning what is needed minus what was asked. A playful version of Snell's law reads: n demo times sine theta ask equals n production times sine theta need, with production denser than the demo because of edge cases, retries and real users. A dimension along the bottom marks the distance from studio to target as 4 to 12 weeks.</desc>
+              <defs>
+                <marker id="arw" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="9" markerHeight="5.4" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 0L10 3L0 6z" fill="currentColor"/></marker>
+                <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="9" class="hatch"/></pattern>
+                <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity=".15"/></linearGradient>
+                <mask id="watermask"><rect x="0" y="300" width="720" height="170" fill="url(#fade)"/></mask>
+              </defs>
+
+              <!-- the surface -->
+              <rect x="0" y="300" width="720" height="170" fill="url(#hatch)" mask="url(#watermask)"/>
+              <line x1="0" y1="300" x2="720" y2="300" class="obj"/>
+              <text x="8" y="292" class="t k">THE SURFACE</text>
+              <text x="8" y="318" class="t sub">THE DEMO, THE DECK, THE FIRST BRIEF</text>
+
+              <!-- straight aim at the apparent target -->
+              <line x1="333.5" y1="333" x2="266" y2="67.5" class="ext"/>
+              <!-- apparent target (hidden line) -->
+              <g class="hid">
+                <circle cx="262" cy="52" r="16"/>
+                <circle cx="262" cy="52" r="7"/>
+              </g>
+              <path d="M262 30v-6M262 74v6M240 52h-6M284 52h6" class="dim" stroke-dasharray="2 2"/>
+
+              <!-- real target -->
+              <g class="acc">
+                <circle cx="150" cy="96" r="16"/>
+                <path d="M150 74v-8M150 118v8M128 96h-8M172 96h8"/>
+              </g>
+              <circle cx="150" cy="96" r="7" class="objf"/>
+              <circle cx="150" cy="96" r="2.4" class="accf"/>
+
+              <!-- the shot -->
+              <path d="M333.5 333Q190 10 150 96" class="jet"/>
+              <circle cx="160" cy="82" r="1.6" class="accf"/>
+              <circle cx="166" cy="88" r="1.2" class="accf"/>
+              <circle cx="157" cy="76" r="1.1" class="accf"/>
+
+              <!-- correction angle -->
+              <line x1="333.5" y1="333" x2="260.3" y2="168.6" class="dim" stroke-dasharray="6 3"/>
+              <path d="M306.3 226.4A110 110 0 0 0 288.8 232.5" class="acc"/>
+              <path d="M190 214H222L294 229" class="lead" marker-end="url(#arw)"/>
+              <text x="62" y="219" class="v">Δ</text>
+              <text x="82" y="212" class="t k">CORRECTION</text>
+              <text x="82" y="225" class="t sub">NEEDED MINUS ASKED</text>
+
+              <!-- dimension: studio to target -->
+              <g>
+                <path d="M150 190V456M333.5 346V456" class="dim"/>
+                <line x1="150" y1="446" x2="200" y2="446" class="dim" marker-start="url(#arw)"/>
+                <line x1="284" y1="446" x2="333.5" y2="446" class="dim" marker-end="url(#arw)"/>
+                <text x="242" y="450" class="t k" text-anchor="middle">4–12 WK</text>
+              </g>
+
+              <!-- the studio: line art drawn by Imgen, painted through masks so it follows the theme -->
+              <mask id="fishBody" maskUnits="userSpaceOnUse" x="286.5" y="289.5" width="297.0" height="199.3"><image href="assets/fish-body.png" x="286.5" y="289.5" width="297.0" height="199.3"/></mask>
+              <mask id="fishLines" maskUnits="userSpaceOnUse" x="286.5" y="289.5" width="297.0" height="199.3"><image href="assets/fish-lines.png" x="286.5" y="289.5" width="297.0" height="199.3"/></mask>
+              <rect x="286.5" y="289.5" width="297.0" height="199.3" class="bg" mask="url(#fishBody)"/>
+              <rect x="286.5" y="289.5" width="297.0" height="199.3" class="inkf" mask="url(#fishLines)"/>
+
+              <!-- callouts -->
+              <path d="M296 40H284L274 46" class="lead" marker-end="url(#arw)"/>
+              <text x="300" y="36" class="t k">APPARENT TARGET</text>
+              <text x="300" y="49" class="t sub">THE ASK AS FIRST STATED</text>
+              <text x="300" y="62" class="t sub">“ADD A CHATBOT.”</text>
+
+              <path d="M70 142L138 108" class="lead" marker-end="url(#arw)"/>
+              <text x="24" y="154" class="t k">REAL TARGET</text>
+              <text x="24" y="167" class="t sub">THE ERRAND DONE, UNATTENDED,</text>
+              <text x="24" y="180" class="t sub">TRUSTED WITH THE RESULT</text>
+
+              <path d="M412 118H272L262 128" class="lead" marker-end="url(#arw)"/>
+              <text x="418" y="116" class="t k">THE SHOT</text>
+              <text x="418" y="129" class="t sub">AIMED AT WHAT'S NEEDED</text>
+
+              <path d="M412 168H293" class="lead" marker-end="url(#arw)"/>
+              <text x="418" y="166" class="t k">STRAIGHT AIM</text>
+              <text x="418" y="179" class="t sub">BUILDS EXACTLY WHAT WAS ASKED</text>
+
+              <path d="M604 347H590L524 370" class="lead" marker-end="url(#arw)"/>
+              <text x="610" y="345" class="t k">THE STUDIO</text>
+              <text x="610" y="358" class="t sub">WORKS BELOW</text>
+              <text x="610" y="371" class="t sub">THE SURFACE</text>
+
+              <!-- the law of the surface -->
+              <g class="wide">
+                <text x="706" y="238" class="eq" text-anchor="end">n<tspan font-size="11" dy="4">demo</tspan><tspan dy="-4"> sin θ</tspan><tspan font-size="11" dy="4">ask</tspan><tspan dy="-4"> = n</tspan><tspan font-size="11" dy="4">prod</tspan><tspan dy="-4"> sin θ</tspan><tspan font-size="11" dy="4">need</tspan></text>
+                <line x1="470" y1="252" x2="706" y2="252" class="thin"/>
+                <text x="706" y="290" class="t" text-anchor="end">DEMO   n 1.000   CLEAN DATA, HAPPY PATH</text>
+                <text x="706" y="320" class="t" text-anchor="end">PRODUCTION   n 1.333   EDGE CASES, RETRIES, REAL USERS</text>
+              </g>
+            </svg>
+            <figcaption class="figcap"><b>Fig. 1</b><span>The real target. Seen through the surface, every problem looks like the first brief. We measure the gap and aim at what the work actually needs, so it lands the first time.</span></figcaption>
+          </figure>
+
+          <div class="tblock" aria-label="Drawing title block">
+            <div class="ttl"><small>Title</small><strong>Archerfish Holdings LLC</strong></div>
+            <div><small>Dwg no.</small><strong>AF-001</strong></div>
+            <div><small>Scale</small><strong>NTS</strong></div>
+            <div><small>Sheet</small><strong>1 of 1</strong></div>
+            <div><small>Date</small><strong id="tb-yr">2026</strong></div>
+            <div><small>Rev</small><strong>A</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <section class="note wrap" id="studio" aria-labelledby="h-studio">
+        <div class="note-head"><span class="kicker">Note</span><h2 id="h-studio">Studio</h2></div>
+        <div class="prose">
+          <p>Archerfish Holdings builds applied AI software, drawing on a decade of work on AI products and the tooling designers and engineers use to shape them.</p>
+          <p>Most AI work stops at the demo. The interesting part starts after it: the retries, the edge cases, the moment a model has to act on someone's behalf and be trusted with the result. That is the work the studio takes on.</p>
+          <p>We take a small number of engagements a year and ship each one end to end.</p>
+        </div>
+      </section>
+
+      <section class="note wrap" id="work" aria-labelledby="h-work">
+        <div class="note-head"><span class="kicker">Details</span><h2 id="h-work">What we build</h2></div>
+        <div class="details">
+          <article class="detail">
+            <div class="detail-top">
+              <svg class="bubble" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18.5"/><line x1="1.5" y1="22" x2="38.5" y2="22"/><text x="20" y="18" font-size="15">A</text><text x="20" y="34" font-size="10">1</text></svg>
+              <svg class="glyph" viewBox="0 0 76 40" aria-hidden="true"><path d="M14 20a12 12 0 1 1 24 0 12 12 0 0 1-24 0" /><path class="a" d="M38 20h22"/><path class="a" d="M55 15l5 5-5 5"/><path d="M60 12h10v16H60" /><path d="M24 6l2.5 2.5L24 11"/></svg>
+            </div>
+            <h3>Agent systems</h3>
+            <p>Assistants that carry out real errands end to end: placing calls, handling correspondence, running scheduled work. Each ships with the guardrails and hand-back paths that make it safe to leave running.</p>
+          </article>
+          <article class="detail">
+            <div class="detail-top">
+              <svg class="bubble" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18.5"/><line x1="1.5" y1="22" x2="38.5" y2="22"/><text x="20" y="18" font-size="15">B</text><text x="20" y="34" font-size="10">1</text></svg>
+              <svg class="glyph" viewBox="0 0 76 40" aria-hidden="true"><path d="M6 14h64M6 28h64"/><path d="M14 10v8M26 10v8M38 10v8M50 10v8M62 10v8" stroke-width=".8"/><rect class="a" x="40" y="22" width="8" height="12"/><path d="M6 28h34" class="a"/></svg>
+            </div>
+            <h3>Interfaces for models</h3>
+            <p>Tooling that gives designers and operators direct, legible control over model behaviour, instead of a prompt box and a shrug.</p>
+          </article>
+          <article class="detail">
+            <div class="detail-top">
+              <svg class="bubble" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18.5"/><line x1="1.5" y1="22" x2="38.5" y2="22"/><text x="20" y="18" font-size="15">C</text><text x="20" y="34" font-size="10">1</text></svg>
+              <svg class="glyph" viewBox="0 0 76 40" aria-hidden="true"><path d="M6 30h64"/><path d="M10 30v-6M22 30v-4M34 30v-6M46 30v-4M58 30v-6M70 30v-4" stroke-width=".8"/><path d="M28 8h18M37 8v14" class="a"/><path d="M33 18l4 5 4-5" class="a"/></svg>
+            </div>
+            <h3>Evaluation and prototypes</h3>
+            <p>Short builds that answer one question about a product idea, with the measurement in place to tell whether the answer held.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="note wrap" id="practice" aria-labelledby="h-practice">
+        <div class="note-head"><span class="kicker">Specification</span><h2 id="h-practice">Practice</h2></div>
+        <div class="spec-wrap">
+          <table>
+            <thead><tr><th scope="col">Item</th><th scope="col">Specification</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Entity</th><td>Archerfish Holdings LLC</td></tr>
+              <tr><th scope="row">Based</th><td>Bay Area, California</td></tr>
+              <tr><th scope="row">Engagements</th><td>Selective, by enquiry</td></tr>
+              <tr><th scope="row">Typical length</th><td>4–12 weeks</td></tr>
+              <tr><th scope="row">Stack</th><td>Python · TypeScript · LLM APIs</td></tr>
+              <tr><th scope="row">Availability</th><td>2027 onward</td></tr>
+            </tbody>
+          </table>
+          <div class="stamp">
+            <div>
+              <small>Status</small>
+              <strong>Taking projects for 2027</strong>
+              <p>Send a short note below to start a conversation.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="note wrap" id="contact" aria-labelledby="h-contact">
+        <div class="note-head"><span class="kicker">Request</span><h2 id="h-contact">Enquiries</h2></div>
+        <div class="contact">
+          <div class="contact-copy">
+            <p>Tell us what you're building and what's in the way. Every message is read, and we reply within two business days.</p>
+            <p>Existing clients: use the address on your statement of work.</p>
+          </div>
+          <div id="formwrap">
+            <form id="contact-form" action="https://formspree.io/f/FORM_ID" method="POST" novalidate>
+              <div class="cells">
+                <div class="r2">
+                  <div class="field">
+                    <label for="name">Name</label>
+                    <input id="name" name="name" type="text" autocomplete="name" required>
+                  </div>
+                  <div class="field">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" autocomplete="email" required>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="message">Project</label>
+                  <textarea id="message" name="message" required placeholder="What you're building, the timeline, and what you need help with."></textarea>
+                </div>
+              </div>
+              <div class="hp" aria-hidden="true">
+                <label for="company">Company</label>
+                <input id="company" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
+              </div>
+              <div class="form-foot">
+                <button type="submit" id="submit">Send enquiry</button>
+                <p class="formnote" id="formnote" role="status" aria-live="polite"></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <span class="legal"><b>© <span id="yr">2026</span> Archerfish Holdings LLC</b></span>
+        <span class="legal">Mountain View, California</span>
+        <span class="legal end">Sheet 1 of 1 · End of drawing</span>
+      </div>
+    </footer>
   </div>
+
+  <div class="zones" aria-hidden="true"><span>8</span><span>7</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span></div>
 </div>
-
-<main id="top">
-
-  <div class="wrap hero">
-    <p class="eyebrow"><span style="white-space:nowrap">Archerfish Holdings LLC</span> &nbsp;·&nbsp; <span style="white-space:nowrap">Independent software studio</span></p>
-    <h1>We build AI systems that <em>do the work</em>, not demos of it.</h1>
-    <p>A studio in the Bay Area. We design and ship applied AI software end to end — from the first sketch to the system running in production.</p>
-  </div>
-
-  <div class="rule"></div>
-
-  <section class="wrap" id="studio">
-    <div class="sec-head"><span class="idx">01</span><h2>Studio</h2></div>
-    <div class="prose">
-      <p>Archerfish Holdings builds applied AI software, drawing on a decade of work on AI products and the tooling designers and engineers use to shape them.</p>
-      <p>Most AI work stops at the demo. The interesting part starts after it: the retries, the edge cases, the moment a model has to act on someone's behalf and be trusted with the result. That is the work the studio takes on.</p>
-      <p>A small number of engagements a year, shipped end to end.</p>
-    </div>
-  </section>
-
-  <div class="rule"></div>
-
-  <section class="wrap" id="work">
-    <div class="sec-head"><span class="idx">02</span><h2>What we build</h2></div>
-    <div class="rows">
-      <article class="row">
-        <span class="n">01</span>
-        <h3>Agent systems</h3>
-        <p>Assistants that carry out real errands end to end — placing calls, handling correspondence, running scheduled work — with the guardrails and hand-back paths that make them safe to leave running.</p>
-      </article>
-      <article class="row">
-        <span class="n">02</span>
-        <h3>Interfaces for models</h3>
-        <p>Tooling that gives designers and operators direct, legible control over model behaviour, instead of a prompt box and a shrug.</p>
-      </article>
-      <article class="row">
-        <span class="n">03</span>
-        <h3>Evaluation and prototypes</h3>
-        <p>Short builds that answer one question about a product idea, with the measurement in place to tell whether the answer held.</p>
-      </article>
-    </div>
-  </section>
-
-  <div class="rule"></div>
-
-  <section class="wrap" id="practice">
-    <div class="sec-head"><span class="idx">03</span><h2>Practice</h2></div>
-    <dl class="specs">
-      <div class="spec"><dt>Entity</dt><dd>Archerfish Holdings LLC</dd></div>
-      <div class="spec"><dt>Based</dt><dd>Bay Area, California</dd></div>
-      <div class="spec"><dt>Engagements</dt><dd>Selective, by enquiry</dd></div>
-      <div class="spec"><dt>Typical length</dt><dd>4–12 weeks</dd></div>
-      <div class="spec"><dt>Stack</dt><dd>Python · TypeScript · LLM APIs</dd></div>
-      <div class="spec"><dt>Availability</dt><dd>2027 onward</dd></div>
-    </dl>
-  </section>
-
-  <div class="rule"></div>
-
-  <section class="wrap" id="contact">
-    <div class="sec-head"><span class="idx">04</span><h2>Enquiries</h2></div>
-    <div class="contact-grid">
-      <div class="contact-copy">
-        <p>Tell us what you're building and what's in the way. Every message is read, and we reply within two business days.</p>
-        <p>Existing clients: use the address on your statement of work.</p>
-      </div>
-      <div id="formwrap">
-        <form id="contact-form" action="https://formspree.io/f/FORM_ID" method="POST" novalidate>
-          <div class="row2">
-            <div class="field">
-              <label for="name">Name</label>
-              <input id="name" name="name" type="text" autocomplete="name" required>
-            </div>
-            <div class="field">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" autocomplete="email" required>
-            </div>
-          </div>
-          <div class="field">
-            <label for="message">Project</label>
-            <textarea id="message" name="message" required placeholder="What you're building, the timeline, and what you need help with."></textarea>
-          </div>
-          <div class="hp" aria-hidden="true">
-            <label for="company">Company</label>
-            <input id="company" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
-          </div>
-          <button type="submit" id="submit">Send enquiry</button>
-          <p class="formnote" id="formnote" role="status" aria-live="polite"></p>
-        </form>
-      </div>
-    </div>
-  </section>
-</main>
-
-<div class="rule"></div>
-<footer>
-  <div class="wrap">
-    <span class="legal">© <span id="yr">2026</span> Archerfish Holdings LLC</span>
-    <span>Mountain View, California</span>
-    <button class="themebtn" type="button" id="theme" aria-label="Switch colour theme">Theme</button>
-  </div>
-</footer>
 
 <script>
 (function(){
-  document.getElementById('yr').textContent = new Date().getFullYear();
+  var y = new Date().getFullYear();
+  document.getElementById('yr').textContent = y;
+  document.getElementById('tb-yr').textContent = y;
 
   // theme toggle: system -> opposite of what's showing, remembered per browser
   var root = document.documentElement;
-  try{ var saved = localStorage.getItem('af-theme'); if(saved){ root.setAttribute('data-theme', saved); } }catch(e){}
-  document.getElementById('theme').addEventListener('click', function(){
-    var dark = root.getAttribute('data-theme')
+  var label = document.getElementById('theme-label');
+  function isDark(){
+    return root.getAttribute('data-theme')
       ? root.getAttribute('data-theme') === 'dark'
       : window.matchMedia('(prefers-color-scheme: dark)').matches;
-    var next = dark ? 'light' : 'dark';
+  }
+  function paint(){ label.textContent = isDark() ? 'Blueprint' : 'Vellum'; }
+  try{ var saved = localStorage.getItem('af-theme'); if(saved){ root.setAttribute('data-theme', saved); } }catch(e){}
+  paint();
+  try{ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint); }catch(e){}
+  document.getElementById('theme').addEventListener('click', function(){
+    var next = isDark() ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
     try{ localStorage.setItem('af-theme', next); }catch(e){}
+    paint();
   });
 
   // contact form
@@ -326,7 +673,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center}
     }).then(function(res){
       if(!res.ok) throw new Error('bad status');
       document.getElementById('formwrap').innerHTML =
-        '<div class="sent"><h3>Message sent</h3><p>Thanks — we\'ll reply within two business days.</p></div>';
+        '<div class="sent"><h3>Message sent</h3><p>Thanks. We\'ll reply within two business days.</p></div>';
     }).catch(function(){
       fail('That didn\'t send. Please try again in a moment.');
     });

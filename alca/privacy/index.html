@@ -5,68 +5,89 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Project Alca privacy policy · Archerfish</title>
 <meta name="description" content="How Alca handles data from the Google accounts its owner connects.">
+<link rel="icon" type="image/png" href="../../assets/favicon.png">
+<link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@500&display=swap">
-<style>
-:root{
-  color-scheme:dark;
-  --ground:#08090A; --ink:#E4E6EA; --muted:#8A8F98; --line:#26282D; --accent:#5EA2FF;
-  --sans:"Geist",system-ui,-apple-system,"Segoe UI",Helvetica,sans-serif;
-  --mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;
-}
-@media (prefers-color-scheme:light){
-  :root{color-scheme:light;--ground:#FCFCFD;--ink:#0C0D0F;--muted:#6B7078;--line:#E3E5E9;--accent:#1B5FD9}
-}
-*{box-sizing:border-box}
-html,body{margin:0}
-body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:680px;margin:0 auto;padding:clamp(48px,10vw,96px) 24px 64px}
-.eyebrow{font:500 11px/1.4 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0 0 24px}
-.eyebrow a{color:inherit}
-h1{font-weight:600;font-size:clamp(2rem,5vw,2.75rem);line-height:1.05;letter-spacing:-.03em;margin:0 0 12px}
-h2{font-weight:600;font-size:1.125rem;letter-spacing:-.01em;margin:36px 0 10px}
-.updated{color:var(--muted);margin:0 0 28px}
-p,li{margin:0 0 14px}
-ul{padding-left:1.2em;margin:0 0 14px}
-a{color:var(--accent)}
-footer{border-top:1px solid var(--line);margin-top:40px;padding-top:20px;color:var(--muted);font-size:.875rem}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
-</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Barlow:wght@400;500;600&family=Martian+Mono:wdth,wght@75..112.5,400..500&display=swap">
+<link rel="stylesheet" href="../../assets/doc.css">
+<script>try{var t=localStorage.getItem('af-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 </head>
 <body>
-<main class="wrap">
-  <p class="eyebrow"><a href="/">Archerfish</a> &nbsp;·&nbsp; <a href="/alca/">Project Alca</a></p>
-  <h1>Project Alca privacy policy</h1>
-  <p class="updated">Last updated 12 October 2026</p>
+<div class="sheet">
+  <header class="strip wrap">
+    <a class="wordmark" href="/">
+      <svg width="34" height="34" viewBox="0 0 256 256" aria-hidden="true">
+        <mask id="logoInk"><image href="../../assets/logo-ink.png" width="256" height="256"/></mask>
+        <mask id="logoJet"><image href="../../assets/logo-jet.png" width="256" height="256"/></mask>
+        <rect width="256" height="256" fill="currentColor" mask="url(#logoInk)"/>
+        <rect width="256" height="256" fill="var(--accent)" mask="url(#logoJet)"/>
+      </svg>
+      Archerfish
+    </a>
+    <button class="themebtn" type="button" id="theme" aria-label="Switch colour theme"><span class="sw" aria-hidden="true"></span><span id="theme-label">Theme</span></button>
+  </header>
 
-  <p>Alca is a personal tool that runs on its owner's own Mac. It is not offered to the public, and the only Google accounts it connects are its owner's. This page says what Alca does with data from those accounts.</p>
+  <main>
+    <div class="tb wrap">
+      <div>
+        <span class="crumbs"><a href="/">Archerfish</a> · <a href="/alca/">Project Alca</a></span>
+        <h1>Project Alca privacy policy</h1>
+      </div>
+      <div class="no"><small>Dwg no.</small><strong>AF-A02</strong></div>
+    </div>
 
-  <h2>What Alca accesses</h2>
-  <ul>
-    <li><strong>Gmail:</strong> messages, threads, drafts and labels, so an agent can search mail, read a message, draft a reply, and send or label mail once the owner approves.</li>
-    <li><strong>Google Calendar:</strong> calendars and events, so an agent can check a schedule and create, change or answer events once the owner approves.</li>
-  </ul>
-  <p>Alca reads this data only when an agent session the owner started asks for it. It does not sync or copy a mailbox or calendar in the background.</p>
+    <div class="doc wrap">
+      <p class="updated">Last updated 12 October 2026</p>
 
-  <h2>Where it goes</h2>
-  <ul>
-    <li>Data read from Google is shown in the owner's session on their own devices and kept in that session's history on the owner's Mac.</li>
-    <li>It is passed to the AI model the owner chose to run that session, only to carry out the owner's request.</li>
-    <li>Sign-in tokens are kept encrypted on the owner's Mac, with the key in the macOS Keychain. They are never written to logs or sent anywhere except Google.</li>
-    <li>Alca has no server of its own on the internet. Archerfish does not receive, sell or share this data, and does not use it for advertising or to train AI models.</li>
-  </ul>
+      <p>Alca is a personal tool that runs on its owner's own Mac. It is not offered to the public, and the only Google accounts it connects are its owner's. This page says what Alca does with data from those accounts.</p>
 
-  <h2>Google API Services User Data Policy</h2>
-  <p>Alca's use and transfer of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+      <h2>What Alca accesses</h2>
+      <ul>
+        <li><strong>Gmail:</strong> messages, threads, drafts and labels, so an agent can search mail, read a message, draft a reply, and send or label mail once the owner approves.</li>
+        <li><strong>Google Calendar:</strong> calendars and events, so an agent can check a schedule and create, change or answer events once the owner approves.</li>
+      </ul>
+      <p>Alca reads this data only when an agent session the owner started asks for it. It does not sync or copy a mailbox or calendar in the background.</p>
 
-  <h2>Removing access</h2>
-  <p>The owner can remove an account in Alca's settings, which revokes its token, or at any time from <a href="https://myaccount.google.com/connections">Google Account › Third-party connections</a>.</p>
+      <h2>Where it goes</h2>
+      <ul>
+        <li>Data read from Google is shown in the owner's session on their own devices and kept in that session's history on the owner's Mac.</li>
+        <li>It is passed to the AI model the owner chose to run that session, only to carry out the owner's request.</li>
+        <li>Sign-in tokens are kept encrypted on the owner's Mac, with the key in the macOS Keychain. They are never written to logs or sent anywhere except Google.</li>
+        <li>Alca has no server of its own on the internet. Archerfish does not receive, sell or share this data, and does not use it for advertising or to train AI models.</li>
+      </ul>
 
-  <h2>Contact</h2>
-  <p>Questions go to the support address shown on Alca's Google sign-in screen.</p>
+      <h2>Google API Services User Data Policy</h2>
+      <p>Alca's use and transfer of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
 
-  <footer>© 2026 Archerfish Holdings LLC</footer>
-</main>
+      <h2>Removing access</h2>
+      <p>The owner can remove an account in Alca's settings, which revokes its token, or at any time from <a href="https://myaccount.google.com/connections">Google Account › Third-party connections</a>.</p>
+
+      <h2>Contact</h2>
+      <p>Questions go to the support address shown on Alca's Google sign-in screen.</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span class="legal"><b>© 2026 Archerfish Holdings LLC</b></span>
+      <span class="legal end">Project Alca · Sheet 2 of 2</span>
+    </div>
+  </footer>
+</div>
+<script>
+(function(){
+  var root = document.documentElement, label = document.getElementById('theme-label');
+  function isDark(){ var t = root.getAttribute('data-theme'); return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches; }
+  function paint(){ label.textContent = isDark() ? 'Blueprint' : 'Vellum'; }
+  paint();
+  try{ matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint); }catch(e){}
+  document.getElementById('theme').addEventListener('click', function(){
+    var next = isDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next); paint();
+    try{ localStorage.setItem('af-theme', next); }catch(e){}
+  });
+})();
+</script>
 </body>
 </html>
